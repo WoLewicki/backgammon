@@ -1,0 +1,118 @@
+@charset "UTF-8";
+/* CSS Document */
+body {
+	background-image: url(tlo2.jpg);
+	background-color: #650001;
+	font-family: "Gill Sans";
+	height:100%;
+}
+
+#main{
+	position: relative;
+	min-height: 100%;
+	padding-bottom: 60px;
+}
+
+header{
+	font-family: "Gill Sans";
+	color: #FEFDEB;
+	font-size: 35pt;
+	font-weight: 600;
+	text-align: center;
+	padding: 20px;
+}
+
+h1{
+	color:#FEFDEB;
+	font-weight:400;
+}
+
+.leftcontainer {
+	width: 700px;
+	float:left;
+}
+
+.rightcontainer {
+	width: 40%;
+	float:right;
+	text-align: center;
+	
+}
+
+.board {
+	border: 15px solid #5B361C;
+	background-color: #FEFDEB;
+	height: 500px;
+	width:100%;
+}
+
+.bar{
+	background-color: #5B361C;
+	width:40px;
+}
+
+.home{
+	background-color: #5B361C;
+	width:40px;
+}
+
+.field{
+	height:100%;
+	width:100%;
+}
+
+.kosci{
+	display: inline-block;
+	margin:20px;
+}
+
+button{
+	font-family: "Gill Sans";
+	font-size: 15px;
+	background-color:#FEFDEB; 
+	padding: 10px;
+	margin: 20px;
+	border-radius: 0px;
+}
+
+.dice{
+	font-size: 25px;
+	margin:10px;
+}
+
+button:hover{
+	background-color:#E9E1CA;
+	border-radius: 0px;
+}
+
+
+#footer{
+	bottom: 0;
+	text-align: center;
+}
+
+#start{
+	font-size: 30px;
+	padding: 20px;
+}
+
+#play{
+	text-align: center;
+}
+
+#rules{
+	border: 10px solid #E9E1CA;
+	text-align: center;
+	font-size: 25px;
+	margin-bottom: 20px;
+	margin-top: 50px;
+	margin-left:auto;
+	margin-right:auto;
+	padding: 20px;
+	background: #FEFDEB; 
+	width: 700px;
+}
+
+td{
+	text-align: center;
+}

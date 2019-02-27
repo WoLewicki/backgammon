@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Zagraj w Tryktrak</title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+</head>
+
+<body>
+	<header>Zagraj w Tryktrak</header>
+	<div id="rules">
+		<p>Wyprowadź wszystkie piony na dwór zanim zrobi to przeciwnik!</p>
+	</div>
+	<div id="play">
+		<a href="{{ url_for('game') }}"><button id="start">Rozpocznij grę</button></a>
+	</div>
+</body>
+</html>

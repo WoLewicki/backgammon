@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tryktrak (Backgammon)</title>
+<link href="../static/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<header>Zagraj w Tryktrak</header>
+	<div id="main">
+		<div class="leftcontainer">
+		<table class="board">
+			<tr height="20px">
+				<td>12</td>
+				<td>11</td>
+				<td>10</td>
+				<td>9</td>
+				<td>8</td>
+				<td>7</td>
+				<td></td>
+				<td>6</td>
+				<td>5</td>
+				<td>4</td>
+				<td>3</td>
+				<td>2</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				{% for i in range(12, 6, -1) %}
+                    {% if (not band_empty['w'] and player == 'w') or (player == 'b' and second_stage['b']) or (player == 'w' and second_stage['w']) %}
+                        {% if i % 2 == 1 %}
+                             {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_top.png"></td>
+                             {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></td>
+                             {% endif %}
+                        {% else %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></td>
+                                {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if i % 2 == 1 %}
+                            {% if  dice[0] == 0 and dice[1] == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_top.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if  dice[0] == 0 and dice[1] == 0%}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_top.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+				<td><img class="field"  src="../static/pionki/bar/{{ band['b'] }}bb.png"></td>
+
+				{% for i in range(6, 0, -1) %}
+                    {% if player == 'w' and second_stage['w'] %}
+                        {% if i % 2 == 1 %}
+                            {% if choice == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_top.png"></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></a></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_top.png"></a></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if choice == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_top.png"></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></a></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_top.png"></a></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% elif player == 'b' and not band_empty['b'] %}
+                        {% if i % 2 == 1 %}
+                            {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_top.png"></a></td>
+                            {% else %}
+                                {% if board[i].player != player %}<td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></td>
+                                {% else %}<td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_top.png"></a></td>
+                            {% else %}
+                                {% if board[i].player != player %}<td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></td>
+                                {% else %}<td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if i % 2 == 1 %}
+                            {% if  dice[0] == 0 and dice[1] == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_top.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if  dice[0] == 0 and dice[1] == 0%}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_top.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_top.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_t.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if second_stage['w'] and player == 'w' and choice > 0 %} <td><a href="{{ url_for('move', choice = -1) }}"><img class="field"  src="../static/pionki/bar/{{ home_w }}wb.png"></a></td>
+                {% else %}<td><img class="field"  src="../static/pionki/bar/{{ home_w }}wb.png"></td>
+                {% endif %}
+			</tr>
+			<tr>
+				{% for i in range(13, 19) %}
+                    {% if (not band_empty['w'] and player == 'w') or (player == 'b' and second_stage['b']) or (player == 'w' and second_stage['w']) %}
+                        {% if i % 2 == 1 %}
+                             {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_bottom.png"></td>
+                             {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></td>
+                             {% endif %}
+                        {% else %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></td>
+                                {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if i % 2 == 1 %}
+                            {% if  dice[0] == 0 and dice[1] == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_bottom.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if  dice[0] == 0 and dice[1] == 0%}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_bottom.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+				<td><img class="field"  src="../static/pionki/bar/{{ band['w'] }}wb.png"></td>
+				{% for i in range(19, 25) %}
+                    {% if player == 'b' and second_stage['b'] %}
+                        {% if i % 2 == 1 %}
+                            {% if choice == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_bottom.png"></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></a></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_bottom.png"></a></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if choice == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_bottom.png"></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></a></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_bottom.png"></a></td>
+                                {% else %}  <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% elif player == 'w' and not band_empty['w'] %}
+                        {% if i % 2 == 1 %}
+                            {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_bottom.png"></a></td>
+                            {% else %}
+                                {% if board[i].player != player %}<td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></td>
+                                {% else %}<td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_bottom.png"></a></td>
+                            {% else %}
+                                {% if board[i].player != player %}<td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></td>
+                                {% else %}<td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if i % 2 == 1 %}
+                            {% if  dice[0] == 0 and dice[1] == 0 %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_odd_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_odd_bottom.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_o_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if  dice[0] == 0 and dice[1] == 0%}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></td>
+                                {% endif %}
+                            {% elif choice == 0 and board[i].player != player %}
+                                {% if board[i].value == 0 %} <td><img class="field" src="../static/pionki/0_even_bottom.png"></td>
+                                {% else %}                   <td><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></td>
+                                {% endif %}
+                            {% else %}
+                                {% if board[i].value == 0 %} <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/0_even_bottom.png"></a></td>
+                                {% else %}                   <td><a href="{{ url_for('move', choice = i) }}"><img class="field" src="../static/pionki/{{ board[i].player }}{{ board[i].value }}_e_b.png"></a></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if second_stage['b'] and player == 'b' and choice > 0 %} <td><a href="{{ url_for('move', choice = 25) }}"><img class="field"  src="../static/pionki/bar/{{ home_b }}bb.png"></a></td>
+				{% else %}<td><img class="field"  src="../static/pionki/bar/{{ home_b }}bb.png"></td>
+                {% endif %}
+			</tr>
+			<tr height="20px">
+				<td>13</td>
+				<td>14</td>
+				<td>15</td>
+				<td>16</td>
+				<td>17</td>
+				<td>18</td>
+				<td></td>
+				<td>19</td>
+				<td>20</td>
+				<td>21</td>
+				<td>22</td>
+				<td>23</td>
+				<td>24</td>
+			</tr>
+		</table>
+	</div>
+        <div class="rightcontainer">
+		<h1>Rozgrywa {{ player }}{% if second_stage[player] %}, wyprowadzaj już pionki z domu. {% endif %}</h1>
+        {% if not band_empty[player] %} <h1> Kliknij w pole, na które chcesz umieścić pionek z bandy</h1> {% endif %}
+        {% if cant_move_b %} <h1> Czarny nie ma ruchu przy wylosowanych wartościach oczek, informacja zniknie po wykonaniu możliwego ruchu przez czarnego. </h1>{% endif %}
+        {% if cant_move_w %} <h1> Biały nie ma ruchu przy wylosowanych wartościach oczek, informacja zniknie po wykonaniu możliwego ruchu przez białego. </h1> {% endif %}
+        {% if choice > 0 %}
+            <h1>Wybrane pole: {{ choice }}</h1>
+            <h1>Kliknij ponownie dane pole żeby skasować wybór</h1>
+        {% endif %}
+		<div>
+            {% if dice[0] == 0 and dice[1] == 0 %}<a href="{{ url_for('roll_a_dice') }}"><button class="dice">Rzuć kostkami</button></a>{% endif %}
+		</div>
+		<div>
+			<table class="kosci">
+				<tr>
+				{% if dice[0]>0 %}  <td><img src="../static/kosci/k1_{{ dice[0] }}.png" width="100px" height="100px"></td>{% endif %}
+				{% if dice[1]>0 %}	<td><img src="../static/kosci/k2_{{ dice[1] }}.png" width="100" height="100"></td>{% endif %}
+				</tr>
+			</table>
+		</div>
+	<div id="footer">
+        <a href="{{ url_for('reset') }}"><button>Reset całej gry</button></a>
+	</div>
+	<div id="footer">
+        <a href={{ url_for('index') }}><button>Powrót do strony głównej</button></a>
+	</div>
+</body>
+</html>

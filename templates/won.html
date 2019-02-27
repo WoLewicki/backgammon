@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tryktrak (Backgammon)</title>
+<link href="../static/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<header>Zagraj w Tryktrak
+{% if player == 'w' %} <h1>WHITE WON!!!!!</h1>{% endif %}
+{% if player == 'b' %} <h1>BLACK WON!!!!!</h1>{% endif %}
+    </header>
+	<div id="footer">
+        <a href="{{ url_for('reset') }}"><button>Zagraj ponownie</button></a>
+	</div>
+	<div id="footer">
+        <a href={{ url_for('index') }}><button>Powrót do strony głównej</button></a>
+	</div>
+</body>
+</html>
